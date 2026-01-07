@@ -1,0 +1,13 @@
+.container{
+    color: blue;
+}
+
+.card{
+    background-color: aquamarine;
+}
+.available{
+    border: 1px dashed green;
+}
+.taken{
+    border: 1px dashed tomato;
+}
