@@ -1,12 +1,13 @@
 import Header from "./Header"
 import Main from "./Main"
 import Footer from "./Footer"
-// import ClickCounter from "./ClickCounter";
-// import CountDisplay from "./CountDisplay";
+import ClickCounter from "./ClickCounter";
+import CountDisplay from "./CountDisplay";
 import { useState } from "react";
 
-import TagWidget from "./TagWiget";
+import TagWidget from "./TagWidget";
 import Dates from "./Dates";
+import Values from "./Values";
 
 
 export default function App () {
@@ -22,13 +23,15 @@ export default function App () {
         setIsOpen(!isOpen)
     }
     return <>    
-                <button onClick={toggle}>Click</button>
+                <button onClick={toggle}>
+                    {isOpen ? "Hide" : "Show"}
+                </button><br/>
                 {isOpen &&
                 <>
-                {/* <ClickCounter onUpdate={handleClick} value={clicks}/>
+                <Values/>
                 <ClickCounter onUpdate={handleClick} value={clicks}/>
-                <ClickCounter onUpdate={handleClick} value={clicks}/> */}
-                {/* <CountDisplay clicks={clicks}/> */}
+                <ClickCounter onUpdate={handleClick} value={clicks}/>
+                <CountDisplay value={clicks}/>
                 <TagWidget />
                 <Dates />
                 <Header/>

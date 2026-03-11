@@ -1,9 +1,9 @@
 
 interface CountDisplayProps{
-    onUpdate: ()=>void;
+
     value: number
 }
-export default function CountDisplay ():ClickCounterProps{
+export default function CountDisplay ({value}:CountDisplayProps){
 
 
    
