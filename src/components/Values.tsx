@@ -29,6 +29,7 @@ export default function Values(){
 
     return(
         <div>
+             <h1>Values</h1>
         <p>x:{values.x}, y:{values.y}</p>
         <button onClick={updateX}>Update X</button>
         <button onClick={updateY}>Update Y</button>
