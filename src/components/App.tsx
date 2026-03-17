@@ -24,7 +24,19 @@ import Modal from "./Modal";
 export default function App () {
 
     const myKey = import.meta.env.VITE_API_KEY;
-    const [clicks, setClick] = useState(0);
+    const [clicks, setClick] = useState(()=>{
+        const savedClicks = window.localStorage.getItem("saved-clicks");
+
+            // Якщо там щось є, повертаємо це 
+        // значення як початкове значення стану
+        if (savedClicks !== null && savedClicks !== "undefined") {
+            return JSON.parse(savedClicks);
+        }
+
+            // У протилежному випадку повертаємо 
+            // яке-небудь значення за замовчуванням
+        return 0;
+    });
     const [isOpen, setIsOpen] = useState(false);
 
     const [articles, setArticles] = useState<Article[]>([]);
@@ -41,6 +53,21 @@ export default function App () {
 
   const closeModal = () => setIsModalOpen(false);
     
+    useEffect(() => {
+        console.log("You can see me only once!");
+    }, []);
+    useEffect(() => {
+        console.log("Clicks updated:", clicks);
+    }, [clicks]);
+    useEffect(() => {
+        console.log("First or second updated:", clicks + count);
+      }, [clicks, count]);
+
+    useEffect(() => {
+        document.title = `You clicked ${clicks} times`;
+      });
+
+
     useEffect(()=>{
         console.log(`Effect ran for: ${count}`);
         // axios
@@ -64,17 +91,24 @@ export default function App () {
     const intervalId = setInterval(() => {
         setTime(new Date());
         console.log(`Interval - ${Date.now()}`);
-        return () => {
-            clearInterval(intervalId);
-            console.log(`Clean up for ${count}`);
-          };
+        
       }, 1000);
+      return () => {
+        clearInterval(intervalId);
+        console.log(`Clean up for ${count}`);
+      };
    },[])
     
         const handleClick = () => {
-        setClick(clicks+1)
-        console.log(clicks);
+            setClick(clicks + 1)
+            console.log(clicks);
+            
+            
     };
+
+    useEffect(()=>{
+       window.localStorage.setItem('saved-clicks',JSON.stringify(clicks))   
+       },[clicks]);
 
     const toggle = () => {
         setIsOpen(!isOpen)
@@ -132,7 +166,10 @@ export default function App () {
                 <Values/>
                 <ClickCounter onUpdate={handleClick} value={clicks}/>
                 <ClickCounter onUpdate={handleClick} value={clicks}/>
+                <ClickCounter onUpdate={handleClick} value={clicks}/>
                 <CountDisplay value={clicks}/>
+                <button onClick={() => setClick(0)}>Reset</button>
+                
                 <TagWidget />
                 <Dates />
                 <Header/>
